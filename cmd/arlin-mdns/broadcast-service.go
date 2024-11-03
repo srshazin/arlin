@@ -3,26 +3,29 @@ package arlinmdns
 import (
 	"fmt"
 	"log"
+	"os"
 	"time"
 
 	"github.com/grandcat/zeroconf"
 )
 
-func Broadcast() {
+func Broadcast(ch <-chan int) {
+	port := <-ch
 	// Define the details of the mDNS service
 	serviceName := "Arlin remote linux service"
 	serviceType := "_arlin._tcp"
 	domain := "local."
-	port := 8080
+
+	hostName, _ := os.Hostname()
 
 	// Register the service with zeroconf
 	server, err := zeroconf.Register(
-		serviceName,                  // Service instance name
-		serviceType,                  // Service type
-		domain,                       // Domain, usually "local."
-		port,                         // Port where the service is accessible
-		[]string{"txtv=hello world"}, // Optional metadata (TXT records)
-		nil,                          // Use default network interface
+		serviceName, // Service instance name
+		serviceType, // Service type
+		domain,      // Domain, usually "local."
+		port,        // Port where the service is accessible
+		[]string{fmt.Sprintf("host=%s", hostName)}, //  metadata
+		nil, // Use default network interface
 	)
 	if err != nil {
 		log.Fatalf("Failed to register mDNS service: %v", err)
@@ -33,7 +36,7 @@ func Broadcast() {
 
 	// Keep the program running to continue broadcasting
 	select {
-	case <-time.After(10 * time.Minute):
+	case <-time.After(100 * time.Minute):
 		fmt.Println("Stopping advertisement after 10 minutes.")
 	}
 }
