@@ -5,9 +5,9 @@ import (
 	"os/exec"
 )
 
-func PromptLinux() (bool, error) {
+func PromptLinux(text string) (bool, error) {
 	// Run the zenity command with a question prompt
-	cmd := exec.Command("zenity", "--question", "--text=Do you accept?", "--ok-label=Accept", "--cancel-label=Reject")
+	cmd := exec.Command("zenity", "--question", fmt.Sprintf("--text=%s", text), "--ok-label=Accept", "--cancel-label=Reject")
 
 	// Run the command and check the return code
 	err := cmd.Run()
