@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/websocket"
+	"shazin.me/arlin/cmd/arlin-server/command"
 )
 
 // Upgrader for HTTP to WS Protocol
@@ -36,7 +37,10 @@ func wsHandler(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 		cmd := string(msg)
-		fmt.Println(cmd)
+		parsedCmd, error := command.ParseCommand(cmd)
+		fmt.Println("Raw cmd : ", cmd)
+		fmt.Println("Parsed cmd : ", parsedCmd)
+		// command.ExecuteCommand(parsedCmd)
 	}
 
 }
