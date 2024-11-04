@@ -25,7 +25,7 @@ func ParseCommand(input string) (*Command, error) {
 		Params: make(map[string]string),
 	}
 
-	// Process each key=value pair
+	// Process each key=value pair after the action
 	for _, part := range parts[1:] {
 		kv := strings.SplitN(part, "=", 2)
 		if len(kv) != 2 {
@@ -33,13 +33,14 @@ func ParseCommand(input string) (*Command, error) {
 		}
 		key, value := kv[0], kv[1]
 
-		// Special handling for the PAIR command with JSON data
-		if cmd.Action == "PAIR" && key == "data" {
-			// Store JSON string as-is in Params
-			cmd.Params[key] = value
-		} else {
-			cmd.Params[key] = value
+		// Remove any surrounding quotes (single or double) from the value
+		if (strings.HasPrefix(value, `"`) && strings.HasSuffix(value, `"`)) ||
+			(strings.HasPrefix(value, `'`) && strings.HasSuffix(value, `'`)) {
+			value = value[1 : len(value)-1]
 		}
+
+		// Store the key and value in the Params map
+		cmd.Params[key] = value
 	}
 
 	return cmd, nil
