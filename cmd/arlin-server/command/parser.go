@@ -1,7 +1,6 @@
 package command
 
 import (
-	"encoding/json"
 	"fmt"
 	"strings"
 )
@@ -36,11 +35,6 @@ func ParseCommand(input string) (*Command, error) {
 
 		// Special handling for the PAIR command with JSON data
 		if cmd.Action == "PAIR" && key == "data" {
-			// Deserialize JSON to validate it
-			var jsonData map[string]interface{}
-			if err := json.Unmarshal([]byte(value), &jsonData); err != nil {
-				return nil, fmt.Errorf("invalid JSON format for data: %s", err)
-			}
 			// Store JSON string as-is in Params
 			cmd.Params[key] = value
 		} else {

@@ -14,7 +14,7 @@ func ExecuteCommand(cmd *Command) {
 	case "CONNECT":
 		fmt.Printf("Connecting to deviceID: %s\n", cmd.Params["deviceID"])
 	case "PAIR":
-		fmt.Printf("Pairing with data: %s\n", cmd.Params["data"])
+		PairDevice(cmd.Params["data"])
 	default:
 		fmt.Println("Unknown command:", cmd.Action)
 	}
