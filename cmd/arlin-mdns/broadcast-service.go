@@ -38,7 +38,7 @@ func Broadcast(ch <-chan int) {
 
 	// Keep the program running to continue broadcasting
 	select {
-	case <-time.After(1 * time.Second):
+	case <-time.After(5 * time.Minute):
 		fmt.Println("Stopping advertisement after 10 minutes.")
 	}
 }
