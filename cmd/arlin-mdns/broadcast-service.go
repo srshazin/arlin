@@ -1,6 +1,7 @@
 package arlinmdns
 
 import (
+	"encoding/base64"
 	"fmt"
 	"log"
 	"os"
@@ -12,10 +13,11 @@ import (
 func Broadcast(ch <-chan int) {
 	port := <-ch
 	// Define the details of the mDNS service
-	serviceName := "Arlin remote linux service"
+	hostAddress, _ := getLocalIP()
+	serviceName := base64.StdEncoding.EncodeToString([]byte(hostAddress))
 	serviceType := "_arlin._tcp"
 	domain := "local."
-
+	fmt.Println("Service: ", serviceName)
 	hostName, _ := os.Hostname()
 
 	// Register the service with zeroconf
@@ -36,7 +38,7 @@ func Broadcast(ch <-chan int) {
 
 	// Keep the program running to continue broadcasting
 	select {
-	case <-time.After(100 * time.Minute):
+	case <-time.After(1 * time.Second):
 		fmt.Println("Stopping advertisement after 10 minutes.")
 	}
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"sync"
 
 	arlinmdns "shazin.me/arlin/cmd/arlin-mdns"
@@ -14,6 +15,13 @@ var portChannel = make(chan int)
 var wg sync.WaitGroup
 
 func initApp() {
+	// first init app state
+	error := arlinserver.InitAppStats()
+
+	if error != nil {
+		log.Fatal(error)
+	}
+
 	// add the websocket to the worker
 	wg.Add(1)
 	go arlinserver.FireUpWsServer(portChannel)
