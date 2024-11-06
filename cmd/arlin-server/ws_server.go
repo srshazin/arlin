@@ -38,9 +38,7 @@ func wsHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		cmd := string(msg)
 		parsedCmd, error := command.ParseCommand(cmd)
-		fmt.Println("Raw cmd : ", cmd)
-		fmt.Println("Parsed cmd : ", parsedCmd)
-		command.ExecuteCommand(parsedCmd)
+		command.ExecuteCommand(parsedCmd, conn)
 	}
 
 }

@@ -1,9 +1,13 @@
 package command
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/gorilla/websocket"
+)
 
 // ExecuteCommand executes a parsed command based on its action and parameters
-func ExecuteCommand(cmd *Command) {
+func ExecuteCommand(cmd *Command, conn *websocket.Conn) {
 	switch cmd.Action {
 	case "MOVE":
 		fmt.Printf("Moving to coordinates x=%s, y=%s\n", cmd.Params["x"], cmd.Params["y"])
