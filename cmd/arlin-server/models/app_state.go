@@ -2,6 +2,6 @@ package models
 
 type AppState struct {
 	DeviceID          string
-	PairedDevicesInfo ArlinPairedDeviceInfo
+	PairedDevicesInfo []ArlinPairedDeviceInfo
 	LastConnected     uint64
 }
