@@ -9,6 +9,8 @@ import (
 
 type PairingDevice struct {
 	DeviceModel string
+	Brand       string
+	DeviceID    string
 }
 
 func PairDevice(conn_data string) error {
