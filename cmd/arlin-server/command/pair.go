@@ -20,7 +20,7 @@ func PairDevice(conn_data string) error {
 	if error != nil {
 		return error
 	}
-	accepted, error := utils.PromptLinux(fmt.Sprintf("Device %s is asking to pair. Do you accept?", pairingDevice.DeviceModel))
+	accepted, error := utils.PromptLinux(fmt.Sprintf("Device %s %s with id %s is asking to pair. Do you accept?", pairingDevice.Brand, pairingDevice.DeviceModel, pairingDevice.DeviceID))
 
 	if accepted {
 		fmt.Println("Connected to device")
