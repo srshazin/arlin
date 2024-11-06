@@ -81,7 +81,7 @@ func InitAppStats() error {
 
 func GetAppState() (models.AppState, error) {
 	var appState models.AppState
-	error := utils.LoadFromFile(appStatFileAbs, appState)
+	error := utils.LoadFromFile(appStatFileAbs, &appState)
 
 	if error != nil {
 		return models.AppState{}, error
@@ -91,11 +91,11 @@ func GetAppState() (models.AppState, error) {
 
 }
 
-func SetAppState(appState models.AppState) error {
-	error := utils.SaveToFile(appStatFileAbs, appState)
+// func AddPairedDevice(device models.ArlinPairedDeviceInfo) error {
+// 	error := utils.SaveToFile(appStatFileAbs, appState)
 
-	if error != nil {
-		return error
-	}
-	return nil
-}
+// 	if error != nil {
+// 		return error
+// 	}
+// 	return nil
+// }
