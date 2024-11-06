@@ -107,6 +107,12 @@ func devieIsPaired(deviceID string) bool {
 }
 
 func AddPairedDevice(device models.ArlinPairedDeviceInfo) error {
+
+	// check whether device is already paired
+	if devieIsPaired(device.DeviceID) {
+		return errors.New("Cannot pair device, Device is already paired")
+	}
+
 	appState, error := GetAppState()
 	if error != nil {
 		return error

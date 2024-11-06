@@ -12,8 +12,8 @@ func main() {
 	arlinserver.InitAppStats()
 	fmt.Println(arlinserver.GetAppState())
 	arlinserver.AddPairedDevice(models.ArlinPairedDeviceInfo{
-		DeviceID:   "XEU34SX",
-		DeviceName: "Google Pixel 4A",
+		DeviceID:   "XEADSIU34SX",
+		DeviceName: "iPhone 16 Pro Max",
 	})
 	fmt.Println(arlinserver.GetAppState())
 }
