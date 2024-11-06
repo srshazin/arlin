@@ -98,9 +98,9 @@ func AddPairedDevice(device models.ArlinPairedDeviceInfo) error {
 	}
 	oldAppState.PairedDevicesInfo = append(oldAppState.PairedDevicesInfo, device)
 
-	fmt.Println("Updated app state: ", oldAppState)
+	// fmt.Println("Updated app state: ", oldAppState)
 
-	// error = utils.SaveToFile(appStatFileAbs, appState)
+	error = utils.SaveToFile(appStatFileAbs, oldAppState)
 
 	// if error != nil {
 	// 	return error
