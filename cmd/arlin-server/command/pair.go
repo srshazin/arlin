@@ -28,8 +28,8 @@ func PairDevice(conn_data string, conn *websocket.Conn) error {
 		conn.WriteMessage(websocket.TextMessage, []byte("Conn accepted"))
 	} else {
 		fmt.Println("Connection rejected!")
-		conn.Close()
 		conn.WriteMessage(websocket.TextMessage, []byte("PAIRING_REJECTED"))
+		conn.Close()
 	}
 	return nil
 
