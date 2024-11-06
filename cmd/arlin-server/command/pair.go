@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"github.com/gorilla/websocket"
 	"shazin.me/arlin/cmd/arlin-server/utils"
 )
 
@@ -13,7 +14,7 @@ type PairingDevice struct {
 	DeviceID    string
 }
 
-func PairDevice(conn_data string) error {
+func PairDevice(conn_data string, conn *websocket.Conn) error {
 	var pairingDevice PairingDevice
 	error := json.Unmarshal([]byte(conn_data), &pairingDevice)
 
@@ -24,8 +25,10 @@ func PairDevice(conn_data string) error {
 
 	if accepted {
 		fmt.Println("Connected to device")
+		conn.WriteMessage(websocket.TextMessage, []byte("Conn accepted"))
 	} else {
 		fmt.Println("Connection rejected!")
+		conn.WriteMessage(websocket.TextMessage, []byte("Conn rejected"))
 	}
 	return nil
 

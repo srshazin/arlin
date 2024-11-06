@@ -18,7 +18,7 @@ func ExecuteCommand(cmd *Command, conn *websocket.Conn) {
 	case "CONNECT":
 		fmt.Printf("Connecting to deviceID: %s\n", cmd.Params["deviceID"])
 	case "PAIR":
-		PairDevice(cmd.Params["data"])
+		PairDevice(cmd.Params["data"], conn)
 	default:
 		fmt.Println("Unknown command:", cmd.Action)
 	}
