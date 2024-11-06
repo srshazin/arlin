@@ -91,16 +91,32 @@ func GetAppState() (models.AppState, error) {
 
 }
 
+// an utility function to check whether device with that id exists
+func devieIsPaired(deviceID string) bool {
+	appState, error := GetAppState()
+	if error != nil {
+		return false
+	}
+
+	for _, device := range appState.PairedDevicesInfo {
+		if device.DeviceID == deviceID {
+			return true
+		}
+	}
+	return false
+}
+
 func AddPairedDevice(device models.ArlinPairedDeviceInfo) error {
-	oldAppState, error := GetAppState()
+	appState, error := GetAppState()
 	if error != nil {
 		return error
 	}
-	oldAppState.PairedDevicesInfo = append(oldAppState.PairedDevicesInfo, device)
+
+	appState.PairedDevicesInfo = append(appState.PairedDevicesInfo, device)
 
 	// fmt.Println("Updated app state: ", oldAppState)
 
-	error = utils.SaveToFile(appStatFileAbs, oldAppState)
+	error = utils.SaveToFile(appStatFileAbs, appState)
 
 	// if error != nil {
 	// 	return error
