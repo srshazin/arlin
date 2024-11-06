@@ -91,11 +91,19 @@ func GetAppState() (models.AppState, error) {
 
 }
 
-// func AddPairedDevice(device models.ArlinPairedDeviceInfo) error {
-// 	error := utils.SaveToFile(appStatFileAbs, appState)
+func AddPairedDevice(device models.ArlinPairedDeviceInfo) error {
+	oldAppState, error := GetAppState()
+	if error != nil {
+		return error
+	}
+	oldAppState.PairedDevicesInfo = append(oldAppState.PairedDevicesInfo, device)
 
-// 	if error != nil {
-// 		return error
-// 	}
-// 	return nil
-// }
+	fmt.Println("Updated app state: ", oldAppState)
+
+	// error = utils.SaveToFile(appStatFileAbs, appState)
+
+	// if error != nil {
+	// 	return error
+	// }
+	return nil
+}
