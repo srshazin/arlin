@@ -79,6 +79,15 @@ func InitAppStats() error {
 
 }
 
+// function to save the app state
+func saveAppState(appState models.AppState) error {
+	error := utils.SaveToFile(appStatFileAbs, appState)
+	if error != nil {
+		return error
+	}
+	return nil
+}
+
 func GetAppState() (models.AppState, error) {
 	var appState models.AppState
 	error := utils.LoadFromFile(appStatFileAbs, &appState)
@@ -92,24 +101,26 @@ func GetAppState() (models.AppState, error) {
 }
 
 // an utility function to check whether device with that id exists
-func devieIsPaired(deviceID string) bool {
+func isDevicePaired(deviceID string) (bool, int) {
 	appState, error := GetAppState()
 	if error != nil {
-		return false
+		return false, -1
 	}
 
-	for _, device := range appState.PairedDevicesInfo {
+	for index, device := range appState.PairedDevicesInfo {
 		if device.DeviceID == deviceID {
-			return true
+			return true, index
 		}
 	}
-	return false
+	return false, -1
 }
 
 func AddPairedDevice(device models.ArlinPairedDeviceInfo) error {
 
+	devicePaired, _ := isDevicePaired(device.DeviceID)
+
 	// check whether device is already paired
-	if devieIsPaired(device.DeviceID) {
+	if devicePaired {
 		return errors.New("Cannot pair device, Device is already paired")
 	}
 
@@ -127,5 +138,35 @@ func AddPairedDevice(device models.ArlinPairedDeviceInfo) error {
 	// if error != nil {
 	// 	return error
 	// }
+	return nil
+}
+
+func UnpairDevice(deviceID string) error {
+
+	devicePaired, pairingIndex := isDevicePaired(deviceID)
+
+	// check whether device is already paired
+	if !devicePaired {
+		return errors.New("Couldn't unpair device. Device doesn;t exists in the paired list!")
+	}
+
+	appState, error := GetAppState()
+	if error != nil {
+		return error
+	}
+
+	// delete the element from the slice
+	updatedPairedList := append(
+		appState.PairedDevicesInfo[:pairingIndex], appState.PairedDevicesInfo[pairingIndex+1:]...,
+	)
+
+	updatedAppState := models.AppState{
+		DeviceID:          appState.DeviceID,
+		PairedDevicesInfo: updatedPairedList,
+		LastConnected:     appState.LastConnected,
+	}
+
+	error = utils.SaveToFile(appStatFileAbs, updatedAppState)
+
 	return nil
 }
