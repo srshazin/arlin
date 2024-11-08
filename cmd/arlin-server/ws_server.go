@@ -7,6 +7,7 @@ import (
 
 	"github.com/gorilla/websocket"
 	"shazin.me/arlin/cmd/arlin-server/command"
+	"shazin.me/arlin/cmd/shared"
 )
 
 // Upgrader for HTTP to WS Protocol
@@ -46,7 +47,7 @@ func wsHandler(w http.ResponseWriter, r *http.Request) {
 
 func FireUpWsServer(ch chan<- int) {
 	http.HandleFunc("/ws", wsHandler)
-	port := 8163
+	port := shared.GetServicePort()
 	addr := fmt.Sprintf(":%v", port)
 	fmt.Printf("ws server started on port %v\n", port)
 	ch <- port
