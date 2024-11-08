@@ -6,6 +6,7 @@ import (
 
 	arlinmdns "shazin.me/arlin/cmd/arlin-mdns"
 	arlinserver "shazin.me/arlin/cmd/arlin-server"
+	appstate "shazin.me/arlin/cmd/arlin-server/app_state"
 )
 
 // create a channel for holding the port number
@@ -16,7 +17,7 @@ var wg sync.WaitGroup
 
 func initApp() {
 	// first init app state
-	error := arlinserver.InitAppStats()
+	error := appstate.InitAppStats()
 
 	if error != nil {
 		log.Fatal(error)
