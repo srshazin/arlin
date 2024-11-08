@@ -3,9 +3,10 @@ package utils
 import (
 	"fmt"
 	"net"
+	"os"
 )
 
-func getLocalIP() (string, error) {
+func GetDeviceLocalIP() (string, error) {
 	interfaces, err := net.Interfaces()
 	if err != nil {
 		return "", err
@@ -40,4 +41,8 @@ func getLocalIP() (string, error) {
 		}
 	}
 	return "", fmt.Errorf("no local IP address found")
+}
+
+func GetDeviceHostName() (string, error) {
+	return os.Hostname()
 }
