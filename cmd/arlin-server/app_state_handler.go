@@ -101,7 +101,7 @@ func GetAppState() (models.AppState, error) {
 }
 
 // an utility function to check whether device with that id exists
-func isDevicePaired(deviceID string) (bool, int) {
+func IsDevicePaired(deviceID string) (bool, int) {
 	appState, error := GetAppState()
 	if error != nil {
 		return false, -1
@@ -117,7 +117,7 @@ func isDevicePaired(deviceID string) (bool, int) {
 
 func AddPairedDevice(device models.ArlinPairedDeviceInfo) error {
 
-	devicePaired, _ := isDevicePaired(device.DeviceID)
+	devicePaired, _ := IsDevicePaired(device.DeviceID)
 
 	// check whether device is already paired
 	if devicePaired {
@@ -143,7 +143,7 @@ func AddPairedDevice(device models.ArlinPairedDeviceInfo) error {
 
 func UnpairDevice(deviceID string) error {
 
-	devicePaired, pairingIndex := isDevicePaired(deviceID)
+	devicePaired, pairingIndex := IsDevicePaired(deviceID)
 
 	// check whether device is already paired
 	if !devicePaired {
