@@ -1,4 +1,4 @@
-package arlinserver
+package appstate
 
 import (
 	"encoding/gob"

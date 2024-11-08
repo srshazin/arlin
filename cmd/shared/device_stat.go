@@ -46,3 +46,7 @@ func GetDeviceLocalIP() (string, error) {
 func GetDeviceHostName() (string, error) {
 	return os.Hostname()
 }
+
+func GetServicePort() int {
+	return 8163
+}
