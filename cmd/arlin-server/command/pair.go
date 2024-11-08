@@ -25,7 +25,7 @@ func PairDevice(conn_data string, conn *websocket.Conn) error {
 
 	if accepted {
 		fmt.Println("Connected to device")
-		conn.WriteMessage(websocket.TextMessage, []byte("Conn accepted"))
+		conn.WriteMessage(websocket.TextMessage, []byte("PAIRING_ACCEPTED"))
 	} else {
 		fmt.Println("Connection rejected!")
 		conn.WriteMessage(websocket.TextMessage, []byte("PAIRING_REJECTED"))
