@@ -5,6 +5,8 @@ import (
 	"fmt"
 
 	"github.com/gorilla/websocket"
+	appstate "shazin.me/arlin/cmd/arlin-server/app_state"
+	"shazin.me/arlin/cmd/arlin-server/models"
 	"shazin.me/arlin/cmd/arlin-server/utils"
 )
 
@@ -26,6 +28,10 @@ func PairDevice(conn_data string, conn *websocket.Conn) error {
 	if accepted {
 		fmt.Println("Connected to device")
 		conn.WriteMessage(websocket.TextMessage, []byte("PAIRING_ACCEPTED"))
+		appstate.AddPairedDevice(models.ArlinPairedDeviceInfo{
+			DeviceID:   pairingDevice.DeviceID,
+			DeviceName: pairingDevice.DeviceModel,
+		})
 	} else {
 		fmt.Println("Connection rejected!")
 		conn.WriteMessage(websocket.TextMessage, []byte("PAIRING_REJECTED"))
