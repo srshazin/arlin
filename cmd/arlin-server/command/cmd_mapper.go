@@ -16,7 +16,7 @@ func ExecuteCommand(cmd *Command, conn *websocket.Conn) {
 	case "MOUSE":
 		fmt.Printf("Clicking %s button\n", cmd.Params["button"])
 	case "CONNECT":
-		fmt.Printf("Connecting to deviceID: %s\n", cmd.Params["deviceID"])
+		connectDevice(cmd.Params["deviceID"], conn)
 	case "PAIR":
 		PairDevice(cmd.Params["data"], conn)
 	case "INQ":
