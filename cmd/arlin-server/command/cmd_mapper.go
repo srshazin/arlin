@@ -2,6 +2,7 @@ package command
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/gorilla/websocket"
 )
@@ -10,11 +11,16 @@ import (
 func ExecuteCommand(cmd *Command, conn *websocket.Conn) {
 	switch cmd.Action {
 	case "MOVE":
-		fmt.Printf("Moving to coordinates x=%s, y=%s\n", cmd.Params["x"], cmd.Params["y"])
+		// fmt.Printf("Moving to coordinates x=%s, y=%s\n", cmd.Params["dx"], cmd.Params["dy"])
+		dx := cmd.Params["dx"]
+		dy := cmd.Params["dy"]
+		dxInt, _ := strconv.Atoi(dx)
+		dyInt, _ := strconv.Atoi(dy)
+		moveCursor(dxInt, dyInt)
 	case "PRESS":
-		fmt.Printf("Pressing key: %s\n", cmd.Params["key"])
+		HandleKeyPress(cmd.Params["key"], conn)
 	case "MOUSE":
-		fmt.Printf("Clicking %s button\n", cmd.Params["button"])
+		handleMouseClick(cmd.Params["button"])
 	case "CONNECT":
 		connectDevice(cmd.Params["deviceID"], conn)
 	case "PAIR":

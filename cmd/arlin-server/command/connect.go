@@ -12,7 +12,7 @@ func connectDevice(deviceID string, conn *websocket.Conn) error {
 		error := conn.WriteMessage(websocket.TextMessage, []byte("OK"))
 		return error
 	} else {
-		error := conn.WriteMessage(websocket.TextMessage, []byte("UNPAIRED"))
+		error := conn.WriteMessage(websocket.TextMessage, []byte("NOT_OK"))
 		conn.Close()
 		return error
 
