@@ -10,6 +10,10 @@ APP_VERSION="0.1.0-alpha"
 BASE_URL="https://github.com/srshazin/arlin/releases/download/$APP_VERSION"
 TMP_FILE="/tmp/$APP_NAME"
 
+# Get the current user and home directory
+CURRENT_USER=$(whoami)
+CURRENT_HOME=$(eval echo ~$CURRENT_USER)
+
 # Check if running on Linux
 if [[ "$(uname -s)" != "Linux" ]]; then
     echo "This installer is only for Linux environments."
@@ -52,7 +56,8 @@ After=network.target
 [Service]
 ExecStart=$INSTALL_DIR/$APP_NAME
 Restart=always
-User=root
+User=$CURRENT_USER
+Environment=HOME=$CURRENT_HOME
 
 [Install]
 WantedBy=multi-user.target
