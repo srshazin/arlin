@@ -29,25 +29,16 @@
 ## Installation
 
 ### On Android:
-1. Download and install **Arlin** from the [releases page](#) (for APK).
+1. Download and install **Arlin** from the [releases page](https://github.com/srshazin/arlin-client/releases) (for APK).
 2. Open the app on your Android device.
 3. Ensure your Android device is connected to the same Wi-Fi network as your Linux machine.
 
 ### On Linux:
-1. Download and install the **Arlin server** on your Linux machine:
-   - You can download the latest release from the [GitHub Releases page](#).
-   - Alternatively, build from source:
+- Make sure you have `bash`, `curl` and `zenity` installed. Than use this command to install
+- Run the installer script
      ```bash
-     git clone https://github.com/yourusername/arlin.git
-     cd arlin
-     make
-     sudo make install
+       curl -f https://raw.githubusercontent.com/srshazin/arlin/refs/heads/main/install.sh | bash
      ```
-
-2. After installation, start the Arlin server on your Linux machine:
-   ```bash
-   arlin-server
-   ```
 
 ---
 
