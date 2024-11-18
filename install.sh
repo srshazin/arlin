@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # Exit on error
 set -e
@@ -32,7 +32,7 @@ case "$ARCH" in
 esac
 
 # Download the binary
-echo "Downloading $APP_NAME for $ARCH..."
+echo "Downloading $APP_NAME for $ARCH from $BINARY_URL"
 curl -fSL "$BINARY_URL" -o "$TMP_FILE"
 
 # Install the binary
