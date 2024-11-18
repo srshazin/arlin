@@ -6,7 +6,8 @@ set -e
 APP_NAME="arlin"
 INSTALL_DIR="/opt/Arlin/bin"
 SERVICE_FILE="/etc/systemd/system/$APP_NAME.service"
-BASE_URL="https://github.com/srshazin/arlin/releases/download/0.1.0-alpha"
+APP_VERSION="0.1.0-alpha"
+BASE_URL="https://github.com/srshazin/arlin/releases/download/$APP_VERSION"
 TMP_FILE="/tmp/$APP_NAME"
 
 # Check if running on Linux
@@ -24,7 +25,7 @@ fi
 # Detect architecture
 ARCH=$(uname -m)
 case "$ARCH" in
-    x86_64) BINARY_URL="$BASE_URL/$APP_NAME-linux-amd64" ;;
+    x86_64) BINARY_URL="$BASE_URL/$APP_NAME-$APP_VERSION-linux-amd64" ;;
     *)
         echo "Unsupported architecture: $ARCH"
         exit 1
