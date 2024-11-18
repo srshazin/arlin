@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"time"
 
 	"github.com/grandcat/zeroconf"
 )
@@ -37,8 +36,5 @@ func Broadcast(ch <-chan int) {
 	fmt.Printf("Service '%s' is now advertised on the network as '%s' at port %d.\n", serviceName, serviceType, port)
 
 	// Keep the program running to continue broadcasting
-	select {
-	case <-time.After(5 * time.Minute):
-		fmt.Println("Stopping advertisement after 10 minutes.")
-	}
+	select {}
 }
