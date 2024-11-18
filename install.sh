@@ -1,13 +1,12 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
 # Exit on error
 set -e
-
 # Variables
-APP_NAME="myapp"
-INSTALL_DIR="/opt/MyApp/bin"
+APP_NAME="arlin"
+INSTALL_DIR="/opt/Arlin/bin"
 SERVICE_FILE="/etc/systemd/system/$APP_NAME.service"
-BASE_URL="https://mysite.com"
+BASE_URL="https://github.com/srshazin/arlin/releases/download/0.1.0-alpha"
 TMP_FILE="/tmp/$APP_NAME"
 
 # Check if running on Linux
@@ -26,8 +25,6 @@ fi
 ARCH=$(uname -m)
 case "$ARCH" in
     x86_64) BINARY_URL="$BASE_URL/$APP_NAME-linux-amd64" ;;
-    armv7l) BINARY_URL="$BASE_URL/$APP_NAME-linux-armv7" ;;
-    aarch64) BINARY_URL="$BASE_URL/$APP_NAME-linux-arm64" ;;
     *)
         echo "Unsupported architecture: $ARCH"
         exit 1
