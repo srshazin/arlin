@@ -17,14 +17,19 @@ type PairingDevice struct {
 }
 
 func PairDevice(conn_data string, conn *websocket.Conn) error {
+	fmt.Println("Echo from pairing")
 	var pairingDevice PairingDevice
 	error := json.Unmarshal([]byte(conn_data), &pairingDevice)
 
 	if error != nil {
+		fmt.Println(error)
 		return error
 	}
 	accepted, error := utils.PromptLinux(fmt.Sprintf("Device %s %s with id %s is asking to pair. Do you accept?", pairingDevice.Brand, pairingDevice.DeviceModel, pairingDevice.DeviceID))
-
+	if error != nil {
+		fmt.Println(error)
+		return error
+	}
 	if accepted {
 		fmt.Println("Connected to device")
 		conn.WriteMessage(websocket.TextMessage, []byte("PAIRING_ACCEPTED"))
@@ -33,7 +38,9 @@ func PairDevice(conn_data string, conn *websocket.Conn) error {
 			DeviceName: pairingDevice.DeviceModel,
 		})
 	} else {
+
 		fmt.Println("Connection rejected!")
+		fmt.Printf("Prompt stat:%v and %v\n", accepted, error)
 		conn.WriteMessage(websocket.TextMessage, []byte("PAIRING_REJECTED"))
 		conn.Close()
 	}

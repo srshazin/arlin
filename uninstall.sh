@@ -2,7 +2,7 @@
 
 # Variables
 APP_NAME="arlin"
-INSTALL_DIR="/opt/MyApp/bin"
+INSTALL_DIR="/opt/Arlin"
 SERVICE_FILE="/etc/systemd/system/$APP_NAME.service"
 
 # Exit on error
@@ -29,7 +29,7 @@ fi
 # Remove the service file
 if [[ -f "$SERVICE_FILE" ]]; then
     echo "Removing the $APP_NAME service file..."
-    sudo rm "$SERVICE_FILE"
+    sudo rm -rvf "$SERVICE_FILE"
 fi
 
 # Reload systemd daemon
