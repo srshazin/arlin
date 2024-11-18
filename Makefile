@@ -19,21 +19,7 @@ all: build
 # Build for the current platform
 build:
 	@echo "Building for the current platform..."
-	CGO_ENABLED=$(CGO_ENABLED) go build -o $(BUILD_DIR)/$(APP_NAME) -ldflags="$(LD_FLAGS)" $(SOURCE_DIR)
-
-# Build for all platforms
-build-all:
-	@echo "Building for multiple platforms..."
-	@mkdir -p $(BUILD_DIR)
-	@for platform in $(PLATFORMS); do \
-		GOOS=$$(echo $$platform | cut -d'/' -f1); \
-		GOARCH=$$(echo $$platform | cut -d'/' -f2); \
-		OUTPUT=$(BUILD_DIR)/$(APP_NAME)-$$GOOS-$$GOARCH; \
-		if [ "$$GOOS" = "windows" ]; then OUTPUT=$$OUTPUT.exe; fi; \
-		echo "Building for $$platform..."; \
-		CGO_ENABLED=$(CGO_ENABLED) GOOS=$$GOOS GOARCH=$$GOARCH go build -o $$OUTPUT -ldflags="$(LD_FLAGS)" $(SOURCE_DIR); \
-		echo "Built: $$OUTPUT"; \
-	done
+	go build -ldflags="-s -w" -o $(BUILD_DIR)/$(APP_NAME)  .
 
 # Clean the build directory
 clean:

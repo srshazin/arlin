@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Variables
-APP_NAME="myapp"
+APP_NAME="arlin"
 INSTALL_DIR="/opt/MyApp/bin"
 SERVICE_FILE="/etc/systemd/system/$APP_NAME.service"
 
